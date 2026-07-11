@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dune: Awakening — Complete Strategy Guide</title>
+<style>
+:root {
+  --bg: #1a1209; --bg-card: #241a0e; --bg-hover: #2e2214;
+  --gold: #d4a24c; --gold-bright: #f0c060; --orange: #c87a2e;
+  --text: #e8dcc8; --text-dim: #a89878; --border: #3d2e1a;
+  --blue: #4a7ca8; --red: #c44a3a; --green: #5a8a3a;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Georgia','Noto Serif SC',serif; background:var(--bg); color:var(--text); line-height:1.8; overflow-x:hidden; }
+.hero { position: relative; padding: 3rem 1rem 2rem; text-align: center; overflow: hidden; background: linear-gradient(180deg, #2a1a08 0%, #1a1209 100%); border-bottom: 1px solid var(--border); }
+.hero::before { content:''; position:absolute; top:0; left:0; right:0; bottom:0; background: radial-gradient(ellipse at 50% 100%, rgba(212,162,76,0.15) 0%, transparent 70%); }
+.hero-content { position: relative; z-index: 2; }
+.hero h1 { font-size: 3.2rem; font-weight:bold; color:var(--gold-bright); text-shadow: 0 4px 30px rgba(212,162,76,0.3); letter-spacing:0.05em; margin-bottom:0.3rem; }
+.hero .subtitle { font-size:1.1rem; color:var(--text-dim); letter-spacing:0.3em; text-transform:uppercase; }
+.hero-dunes { position:absolute; bottom:0; width:100%; height:50%; background: radial-gradient(ellipse 80% 100% at 20% 100%, #3a2818 0%, transparent 70%), radial-gradient(ellipse 70% 100% at 60% 100%, #2e1e10 0%, transparent 65%), radial-gradient(ellipse 90% 100% at 90% 100%, #342214 0%, transparent 60%); pointer-events:none; }
+.lang-toggle { position: absolute; top: 1rem; right: 1.5rem; z-index: 10; display: flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; }
+.lang-btn { padding:0.35rem 0.9rem; font-size:0.8rem; cursor:pointer; border:none; background:var(--bg-card); color:var(--text-dim); font-family:sans-serif; transition:all 0.2s; }
+.lang-btn.active { background:var(--gold); color:#1a1209; font-weight:bold; }
+.lang-btn:hover:not(.active) { background:var(--bg-hover); color:var(--gold-bright); }
+nav { position:sticky; top:0; z-index:100; background:rgba(26,18,9,0.95); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); padding:0.6rem 0; }
+nav ul { display:flex; justify-content:center; gap:0.3rem; list-style:none; flex-wrap:wrap; max-width:1200px; margin:0 auto; padding:0 1rem; }
+nav a { display:block; padding:0.5rem 1rem; color:var(--text-dim); text-decoration:none; font-size:0.9rem; border-radius:4px; transition:all 0.2s; font-family:sans-serif; }
+nav a:hover { color:var(--gold-bright); background:var(--bg-hover); }
+.container { max-width:1000px; margin:0 auto; padding:0 1.5rem; }
+section { padding:3rem 0; border-bottom:1px solid var(--border); }
+section:last-child { border-bottom:none; }
+.section-title { font-size:2.2rem; color:var(--gold-bright); margin-bottom:0.5rem; position:relative; padding-bottom:0.5rem; }
+.section-title::after { content:''; position:absolute; bottom:0; left:0; width:60px; height:3px; background:linear-gradient(90deg,var(--gold),transparent); }
+.section-desc { color:var(--text-dim); font-size:1rem; margin-bottom:2rem; }
+.card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem; }
+.card { background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:1.8rem; transition:all 0.3s; }
+.card:hover { background:var(--bg-hover); border-color:var(--gold); transform:translateY(-3px); box-shadow:0 8px 30px rgba(0,0,0,0.4); }
+.card h3 { color:var(--gold-bright); font-size:1.2rem; margin-bottom:0.8rem; display:flex; align-items:center; gap:0.5rem; }
+.card-icon { display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background:rgba(212,162,76,0.15); font-size:1.1rem; flex-shrink:0; }
+.card p, .card li { color:var(--text-dim); font-size:0.95rem; }
+.card ul { list-style:none; padding:0; }
+.card ul li { padding:0.4rem 0; padding-left:1.5rem; position:relative; }
+.card ul li::before { content:'◈'; position:absolute; left:0; color:var(--orange); }
+.callout { background:linear-gradient(135deg,rgba(212,162,76,0.1),rgba(200,122,46,0.05)); border-left:4px solid var(--gold); border-radius:0 8px 8px 0; padding:1.2rem 1.5rem; margin:1.5rem 0; }
+.callout-title { color:var(--gold-bright); font-weight:bold; margin-bottom:0.5rem; }
+.callout p { color:var(--text); font-size:0.95rem; }
+.callout-danger { background:linear-gradient(135deg,rgba(196,74,58,0.1),rgba(196,74,58,0.03)); border-left:4px solid var(--red); border-radius:0 8px 8px 0; padding:1.2rem 1.5rem; margin:1.5rem 0; }
+.callout-danger .callout-title { color:#e85a4a; }
+.callout-tip { background:linear-gradient(135deg,rgba(90,138,58,0.1),rgba(90,138,58,0.03)); border-left:4px solid var(--green); border-radius:0 8px 8px 0; padding:1.2rem 1.5rem; margin:1.5rem 0; }
+.callout-tip .callout-title { color:#7aaa5a; }
+.class-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; }
+.class-card { background:var(--bg-card); border:1px solid var(--border); border-radius:8px; overflow:hidden; transition:all 0.3s; }
+.class-card:hover { border-color:var(--gold); transform:translateY(-3px); }
+.class-header { padding:1.2rem; text-align:center; background:linear-gradient(135deg,rgba(212,162,76,0.15),transparent); border-bottom:1px solid var(--border); }
+.class-header h3 { color:var(--gold-bright); font-size:1.3rem; }
+.class-header .role { color:var(--text-dim); font-size:0.85rem; margin-top:0.3rem; }
+.class-body { padding:1.2rem; }
+.class-body p { color:var(--text-dim); font-size:0.9rem; margin-bottom:0.5rem; }
+.timeline { position:relative; padding-left:2rem; }
+.timeline::before { content:''; position:absolute; left:8px; top:0; bottom:0; width:2px; background:linear-gradient(180deg,var(--gold),var(--border)); }
+.timeline-item { position:relative; margin-bottom:2rem; }
+.timeline-item::before { content:''; position:absolute; left:-2rem; top:0.3rem; width:18px; height:18px; border-radius:50%; background:var(--bg); border:3px solid var(--gold); }
+.timeline-item h4 { color:var(--gold-bright); margin-bottom:0.3rem; }
+.timeline-item p { color:var(--text-dim); font-size:0.95rem; }
+table { width:100%; border-collapse:collapse; margin:1.5rem 0; }
+th, td { padding:0.8rem 1rem; text-align:left; border-bottom:1px solid var(--border); }
+th { color:var(--gold-bright); font-size:0.9rem; }
+td { color:var(--text-dim); font-size:0.9rem; }
+tr:hover td { background:var(--bg-hover); }
+.steps { counter-reset:step; }
+.step { position:relative; padding:1.5rem 1.5rem 1.5rem 4rem; margin-bottom:1rem; background:var(--bg-card); border:1px solid var(--border); border-radius:8px; transition:all 0.2s; }
+.step:hover { border-color:var(--orange); }
+.step::before { counter-increment:step; content:counter(step); position:absolute; left:1.2rem; top:50%; transform:translateY(-50%); font-size:1.8rem; font-weight:bold; color:var(--gold); opacity:0.5; }
+.step h4 { color:var(--gold-bright); margin-bottom:0.3rem; }
+.step p { color:var(--text-dim); font-size:0.9rem; }
+.faq-item { background:var(--bg-card); border:1px solid var(--border); border-radius:8px; margin-bottom:1rem; overflow:hidden; }
+.faq-q { padding:1rem 1.5rem; cursor:pointer; color:var(--gold); font-weight:bold; display:flex; justify-content:space-between; align-items:center; transition:all 0.2s; }
+.faq-q:hover { background:var(--bg-hover); }
+.faq-q .arrow { transition:transform 0.3s; }
+.faq-item.open .faq-q .arrow { transform:rotate(180deg); }
+.faq-a { max-height:0; overflow:hidden; transition:max-height 0.3s ease; }
+.faq-item.open .faq-a { max-height:400px; }
+.faq-a-inner { padding:0 1.5rem 1rem; color:var(--text-dim); font-size:0.9rem; }
+footer { text-align:center; padding:3rem 1rem; color:var(--text-dim); font-size:0.85rem; border-top:1px solid var(--border); }
+@media (max-width:768px) { .hero h1 { font-size:2rem; } .hero .subtitle { font-size:0.9rem; } nav ul { gap:0.1rem; } nav a { padding:0.4rem 0.6rem; font-size:0.8rem; } .section-title { font-size:1.6rem; } .lang-toggle { top:0.5rem; right:0.5rem; } }
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-dunes"></div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('zh')">中文</button>
+  </div>
+  <div class="hero-content">
+    <h1 data-zh="沙丘：觉醒">Dune: Awakening</h1>
+    <p class="subtitle" data-zh="全面攻略指南">Complete Strategy Guide</p>
+  </div>
+</div>
+<nav>
+  <ul>
+    <li><a href="#intro" data-zh="游戏简介">Overview</a></li>
+    <li><a href="#beginner" data-zh="新手入门">Beginner Guide</a></li>
+    <li><a href="#survival" data-zh="生存机制">Survival</a></li>
+    <li><a href="#classes" data-zh="职业选择">Classes</a></li>
+    <li><a href="#combat" data-zh="武器战斗">Combat</a></li>
+    <li><a href="#base" data-zh="基地建设">Base Building</a></li>
+    <li><a href="#progression" data-zh="进阶策略">Progression</a></li>
+    <li><a href="#multiplayer" data-zh="多人玩法">Multiplayer</a></li>
+    <li><a href="#faq" data-zh="常见问题">FAQ</a></li>
+  </ul>
+</nav>
+<section id="intro">
+  <div class="container">
+    <h2 class="section-title" data-zh="游戏简介">Game Overview</h2>
+    <p class="section-desc" data-zh="在厄拉科斯星球上，生存、战斗与政治博弈交织成一场壮阔的冒险。">On Arrakis, survival, combat, and political intrigue weave together into an epic adventure.</p>
+    <p style="color:var(--text); font-size:1.05rem; margin-bottom:1.5rem;" data-zh="《沙丘：觉醒》是一款基于弗兰克·赫伯特经典科幻小说《沙丘》改编的开放世界生存多人游戏。玩家将置身于厄拉科斯（Arrakis）这颗沙漠星球，面对极端的自然环境、致命的沙虫、资源争夺和政治阴谋。游戏融合了生存建造、基地建设、阵营对抗和大规模PVP，在独特的沙丘宇宙中打造了前所未有的生存体验。">Dune: Awakening is an open-world survival MMO based on Frank Herbert's legendary sci-fi novel <em>Dune</em>. Players are thrust onto the desert planet Arrakis, facing extreme natural conditions, deadly sandworms, resource scarcity, and political conspiracies. The game blends survival crafting, base building, faction warfare, and large-scale PvP into an unprecedented survival experience set in the iconic Dune universe.</p>
+    <div class="card-grid" style="margin-top:2rem;">
+      <div class="card"><h3><span class="card-icon">🌍</span> <span data-zh="开放世界">Open World</span></h3><p data-zh="广袤的沙漠星球等待探索，从哈加盆地到深漠腹地，每个区域都有独特的资源、危险和秘密。">A vast desert planet awaits exploration — from Hagga Basin to the Deep Desert, each region offers unique resources, dangers, and secrets.</p></div>
+      <div class="card"><h3><span class="card-icon">💧</span> <span data-zh="生存挑战">Survival Challenge</span></h3><p data-zh="水分管理、防暑降温、沙虫规避——在厄拉科斯，环境本身就是最致命的敌人。">Water management, heat protection, sandworm avoidance — on Arrakis, the environment itself is your deadliest enemy.</p></div>
+      <div class="card"><h3><span class="card-icon">⚔️</span> <span data-zh="阵营战争">Faction Warfare</span></h3><p data-zh="加入厄崔迪或哈克南家族，参与兰兹拉德政治博弈，争夺星球控制权。">Join House Atreides or House Harkonnen, compete in the Landsraad political meta, and fight for control of the planet.</p></div>
+      <div class="card"><h3><span class="card-icon">🏗️</span> <span data-zh="建造与制造">Build &amp; Craft</span></h3><p data-zh="从简易营地到庞大堡垒，从废铁刀到悬浮飞行器——从零开始打造你的沙漠帝国。">From makeshift camps to massive fortresses, from scrap knives to hover aircraft — build your desert empire from scratch.</p></div>
+    </div>
+  </div>
+</section>
+<section id="beginner">
+  <div class="container">
+    <h2 class="section-title" data-zh="新手入门指南">Beginner Guide</h2>
+    <p class="section-desc" data-zh="第一个小时至关重要——以下是前期最关键的建议。">The first hour is critical — here are the most important early-game tips.</p>
+    <div class="callout"><div class="callout-title" data-zh="核心原则">Core Principle</div><p data-zh="耐心是生存的关键。厄拉科斯奖励有准备的玩家，而非鲁莽的冒险者。不要急于深入危险区域，先在安全区打好基础。">Patience is survival. Arrakis rewards prepared players, not reckless adventurers. Don't rush into dangerous zones — build your foundation in safe areas first.</p></div>
+    <div class="steps" style="margin-top:2rem;">
+      <div class="step"><h4 data-zh="完成教程任务">Complete the Tutorial</h4><p data-zh="教程会引导你制作废铁刀、收集资源、学习基础生存技能。完成教程任务还能解锁关键蓝图和情报点。前期教程给予的情报点足够解锁大部分基础研究。">The tutorial guides you through crafting a Scrap Metal Knife, gathering resources, and learning basic survival. Completing it unlocks key blueprints and Intel Points.</p></div>
+      <div class="step"><h4 data-zh="制作第一把武器——废铁刀">Craft Your First Weapon — Scrap Metal Knife</h4><p data-zh="废铁刀不仅是你的第一件武器，还能用来切割环境中的生物薄膜等障碍物，是推进教程的关键道具。">It's not just your first weapon — it's also used to cut through environmental obstacles like biological membranes.</p></div>
+      <div class="step"><h4 data-zh="优先收集水分和基础资源">Prioritize Water and Basic Resources</h4><p data-zh="废金属、植物纤维和水是前期最核心的材料。随时携带应急水源，不要让水分降到危险线以下。">Scrap Metal, plant fiber, and Water are the core early-game materials. Always carry emergency water.</p></div>
+      <div class="step"><h4 data-zh="建立临时基地">Build a Temporary Base</h4><p data-zh="在哈加盆地南部（起始区域）建一个2×3或3×3的临时基地即可。不要在起始区建永久基地——那里远离高阶资源。">A 2×3 or 3×3 temporary base in Hagga Basin South is enough. Don't build a permanent base here — it's far from high-tier resources.</p></div>
+      <div class="step"><h4 data-zh="制造沙地摩托（Sandbike）">Craft a Sandbike</h4><p data-zh="尽快制造你的第一辆载具。厄拉科斯非常辽阔，步行探索效率极低。有了载具后，才能高效地侦查、采集和运输。">Build your first vehicle ASAP. Arrakis is enormous — walking is extremely inefficient.</p></div>
+      <div class="step"><h4 data-zh="尽早搬到虫壳丘间隙（Vermillius Gap）">Move to Vermillius Gap ASAP</h4><p data-zh="积攒够资源和情报点后，拆除临时基地，向更高级区域转移。虫壳丘间隙是中期发展的理想地点。">Once you have enough resources, tear down your temporary base and relocate. Vermillius Gap is an ideal mid-game hub.</p></div>
+    </div>
+    <div class="callout-danger"><div class="callout-title" data-zh="新手常见误区">Common Beginner Mistake</div><p data-zh="不要在开阔沙地上长时间奔跑——沙虫会被震动吸引。尽量走岩石地带，避开暴露的沙面。">Don't sprint across open sand — sandworms are attracted to vibrations. Stick to rocky terrain.</p></div>
+  </div>
+</section>
+<section id="survival">
+  <div class="container">
+    <h2 class="section-title" data-zh="生存机制">Survival Mechanics</h2>
+    <p class="section-desc" data-zh="在厄拉科斯，掌握生存机制比战斗能力更重要。">On Arrakis, mastering survival mechanics matters more than combat prowess.</p>
+    <div class="card-grid">
+      <div class="card"><h3><span class="card-icon">💧</span> <span data-zh="水分管理">Water Management</span></h3><ul><li data-zh="水是厄拉科斯上最珍贵的资源，优先于一切">Water is the most precious resource on Arrakis — prioritize it above all</li><li data-zh="沙漠高温持续消耗水分">Desert heat continuously drains hydration</li><li data-zh="尽早建造蓄水设施">Build water storage early</li><li data-zh="随身携带应急水源">Always carry emergency water</li><li data-zh="水分直接影响体力和生命恢复">Hydration affects stamina and health regeneration</li></ul></div>
+      <div class="card"><h3><span class="card-icon">🌡️</span> <span data-zh="高温与体温">Heat &amp; Temperature</span></h3><ul><li data-zh="正午烈日下行进会急剧消耗水分">Midday sun rapidly accelerates hydration drain</li><li data-zh="利用地形遮阳，选择清晨或傍晚出行">Use terrain for shade; travel early morning or evening</li><li data-zh="装备防护服和隔热配件">Equip protective gear and heat-resistant accessories</li><li data-zh="沙暴会大幅加剧体温消耗">Sandstorms worsen temperature effects</li><li data-zh="体温管理在长距离探索中尤为关键">Temperature management is critical during long expeditions</li></ul></div>
+      <div class="card"><h3><span class="card-icon">🪱</span> <span data-zh="沙虫规避">Sandworm Avoidance</span></h3><ul><li data-zh="沙虫对地面震动高度敏感">Sandworms are highly sensitive to ground vibrations</li><li data-zh="在开阔沙面上奔跑极易引来沙虫">Running on open sand easily attracts them</li><li data-zh="尽量沿岩石地带和硬质地面移动">Stick to rocky terrain and hard ground</li><li data-zh="使用载具时：护盾振动会吸引沙虫">Vehicle shield vibrations attract sandworms</li><li data-zh="深漠区域沙虫威胁更大">Deep Desert has greater sandworm threat</li></ul></div>
+      <div class="card"><h3><span class="card-icon">🌀</span> <span data-zh="沙暴应对">Sandstorm Survival</span></h3><ul><li data-zh="沙暴不仅仅是视觉效果——它们极其危险">Sandstorms are extremely dangerous</li><li data-zh="会完全干扰导航、大幅降低可见度">They disrupt navigation and reduce visibility</li><li data-zh="造成持续伤害并可能将队伍分散">They cause continuous damage and can separate groups</li><li data-zh="沙暴来临时：立即寻找庇护所">When a storm hits: seek shelter immediately</li><li data-zh="远离开阔地带，保护装备，监控水分">Avoid open terrain, protect equipment, monitor hydration</li></ul></div>
+    </div>
+    <div class="callout"><div class="callout-title" data-zh="生存优先级排序">Survival Priority Order</div><p data-zh="1. 水分 > 2. 遮蔽/温度管理 > 3. 装备维护 > 4. 弹药补给 > 5. 战斗准备">1. Hydration > 2. Shelter/Temperature > 3. Equipment Maintenance > 4. Ammo Supply > 5. Combat Readiness</p></div>
+  </div>
+</section>
+<section id="classes">
+  <div class="container">
+    <h2 class="section-title" data-zh="职业选择与技能">Classes &amp; Skills</h2>
+    <p class="section-desc" data-zh="选择适合你游戏风格的职业，解锁专属能力。">Choose a class that fits your playstyle and unlock unique abilities.</p>
+    <div class="class-grid">
+      <div class="class-card"><div class="class-header"><h3 data-zh="士兵（Trooper）">Trooper</h3><div class="role" data-zh="远程射击 · 新手推荐">Ranged Combat · Beginner Recommended</div></div><div class="class-body"><p><strong style="color:var(--gold)">Role:</strong> <span data-zh="远程火力输出，操作简单">Ranged DPS, easy to play</span></p><p><strong style="color:var(--gold)">Abilities:</strong> <span data-zh="强制、膝撞">Compel, Knee Charge</span></p><p><strong style="color:var(--green)">Rating:</strong> ★★★★★ — <span data-zh="最佳新手职业">Best starter class</span></p></div></div>
+      <div class="class-card"><div class="class-header"><h3 data-zh="剑术大师（Swordmaster）">Swordmaster</h3><div class="role" data-zh="近战格斗 · 高技巧">Melee Combat · High Skill</div></div><div class="class-body"><p><strong style="color:var(--gold)">Role:</strong> <span data-zh="近战输出，擅长格挡、招架和慢刀破盾">Melee DPS, blocking, parrying, shield penetration</span></p><p><strong style="color:var(--gold)">Abilities:</strong> <span data-zh="慢刀攻击、连击终结技">Slow Blade Attack, combo finishers</span></p><p><strong style="color:var(--orange)">Rating:</strong> ★★★★☆ — <span data-zh="适合进阶玩家">For advanced players</span></p></div></div>
+      <div class="class-card"><div class="class-header"><h3 data-zh="潜行者（Stealth）">Stealth Class</h3><div class="role" data-zh="隐蔽刺杀 · 战术型">Stealth &amp; Assassination · Tactical</div></div><div class="class-body"><p><strong style="color:var(--gold)">Role:</strong> <span data-zh="利用隐身能力进行侦查、伏击">Scouting, ambushes, repositioning</span></p><p><strong style="color:var(--gold)">Abilities:</strong> <span data-zh="隐身、重力手雷">Invisibility, Gravity Grenade</span></p><p><strong style="color:var(--blue)">Rating:</strong> ★★★★☆ — <span data-zh="适合战术型玩家">For tactical players</span></p></div></div>
+    </div>
+    <div class="callout" style="margin-top:2rem;"><div class="callout-title" data-zh="混合技能系统">Hybrid Skill System</div><p data-zh="你不必局限于单一职业。随着等级提升，可以混合不同学派的技能，打造独特的build。">You're not locked into one class. Mix skills from different Schools of the Imperium to create a unique build. Spice can temporarily enhance combat abilities (Prescience).</p></div>
+    <h3 style="color:var(--gold-bright); margin:2rem 0 1rem;" data-zh="研究系统（Research）">Research System</h3>
+    <table><thead><tr><th data-zh="研究学科">Discipline</th><th data-zh="解锁内容">Unlocks</th><th data-zh="说明">Description</th></tr></thead><tbody>
+      <tr><td data-zh="水分学科">Water</td><td data-zh="取水装备、露水收集器">Hydration gear, dew collectors</td><td data-zh="提升水分获取效率">Improves water acquisition</td></tr>
+      <tr><td data-zh="战斗学科">Combat</td><td data-zh="武器、护甲升级">Weapons, armor upgrades</td><td data-zh="增强战斗力">Enhances combat power</td></tr>
+      <tr><td data-zh="建造学科">Construction</td><td data-zh="存储、结构升级">Storage, structural upgrades</td><td data-zh="扩展基地功能">Expands base functionality</td></tr>
+      <tr><td data-zh="探索学科">Exploration</td><td data-zh="穿越装备、扫描工具">Traversal gear, scanning tools</td><td data-zh="提升探索效率">Boosts exploration efficiency</td></tr>
+      <tr><td data-zh="载具学科">Vehicles</td><td data-zh="沙地摩托、越野车、扑翼机">Sandbike, Buggy, Ornithopter</td><td data-zh="解锁不同载具类型">Unlocks vehicle types</td></tr>
+    </tbody></table>
+    <div class="callout-tip"><div class="callout-title" data-zh="情报点获取方式">Earning Intel Points</div><p data-zh="升级、探索新区域、清除敌人营地、激活扫描节点。前期充裕，后期需合理规划。">Leveling up, exploring new zones, clearing enemy camps, activating scanning nodes. Plan strategically.</p></div>
+  </div>
+</section>
+<section id="combat">
+  <div class="container">
+    <h2 class="section-title" data-zh="武器与战斗技巧">Weapons &amp; Combat</h2>
+    <p class="section-desc" data-zh="战斗是实时、战术性和高度情境化的——掌握武器切换和护盾破解是关键。">Combat is real-time, tactical, and highly situational — master weapon swapping and shield-breaking.</p>
+    <div class="card-grid">
+      <div class="card"><h3><span class="card-icon">🔪</span> <span data-zh="近战武器">Melee Weapons</span></h3><ul><li><strong>Scrap Metal Knife:</strong> <span data-zh="第一把武器，也是切割障碍物的工具">First weapon and tool for cutting obstacles</span></li><li><strong>Slow Blade (hold):</strong> <span data-zh="唯一能穿透护盾的早期手段">Only early method to pierce shields</span></li><li data-zh="格挡键适时按下可招架并眩晕敌人">Timed blocks result in parries that stun enemies</li><li data-zh="近战攻击可使敌人硬直">Melee attacks stagger enemies</li></ul></div>
+      <div class="card"><h3><span class="card-icon">🔫</span> <span data-zh="远程武器">Ranged Weapons</span></h3><ul><li><strong>Maula Pistol:</strong> <span data-zh="第一把远程武器">First ranged weapon</span></li><li><strong>Karpov 38 Rifle:</strong> <span data-zh="前期最佳武器">Best early-game weapon</span></li><li data-zh="弹药以30发为一组，成本低">Ammo crafted in packs of 30 — cheap</li><li data-zh="早期飞镖对护盾敌人几乎无效">Early darts are useless vs shields — switch to melee</li></ul></div>
+      <div class="card"><h3><span class="card-icon">🛡️</span> <span data-zh="护盾与破盾">Shields &amp; Counters</span></h3><ul><li data-zh="霍尔茨曼护盾可以阻挡大部分远程伤害">Holtzman shields block most ranged damage</li><li><strong>Counters:</strong> <span data-zh="慢刀攻击、火焰/毒素效果、扰乱型武器">Slow Blade, fire/poison, disruptor weapons</span></li><li data-zh="PVP和后期PVE中护盾至关重要">Shields are critical in PvP and late-game PvE</li><li data-zh="深漠中开启护盾会吸引沙虫">Shields attract sandworms in the Deep Desert</li></ul></div>
+      <div class="card"><h3><span class="card-icon">🔄</span> <span data-zh="战斗节奏">Combat Flow</span></h3><ul><li data-zh="随时切换近战/远程武器——核心技巧">Swap melee/ranged at will — core skill</li><li data-zh="先射杀无盾目标">Shoot unshielded targets first</li><li data-zh="立即切换近战对付护盾敌人">Switch to melee for shielded enemies</li><li data-zh="体力和水分直接影响战斗表现">Stamina and hydration affect combat performance</li></ul></div>
+    </div>
+    <div class="callout-danger"><div class="callout-title" data-zh="前期战斗须知">Early Combat Essentials</div><p data-zh="不要试图与每个敌人交战。前期武器弱、治疗资源少。优先规避不必要的战斗，保留弹药。">Don't fight every enemy. Early weapons are weak and healing is limited. Prioritize avoidance, choose favorable engagements, conserve ammo. Retreat when outnumbered.</p></div>
+    <table><thead><tr><th data-zh="能力">Ability</th><th data-zh="类型">Type</th><th data-zh="效果">Effect</th></tr></thead><tbody>
+      <tr><td>Compel</td><td data-zh="控制">Control</td><td data-zh="迫使敌人移动或冻结">Forces enemies to move or freeze</td></tr>
+      <tr><td>Knee Charge</td><td data-zh="位移">Mobility</td><td data-zh="快速缩短距离">Quickly close distance</td></tr>
+      <tr><td>Gravity Grenade</td><td data-zh="范围控制">AoE</td><td data-zh="击退区域内敌人">Knocks back enemies</td></tr>
+      <tr><td>Invisibility</td><td data-zh="潜行">Stealth</td><td data-zh="暂时隐身">Temporarily vanish</td></tr>
+    </tbody></table>
+  </div>
+</section>
+<section id="base">
+  <div class="container">
+    <h2 class="section-title" data-zh="资源采集与基地建设">Gathering &amp; Base Building</h2>
+    <p class="section-desc" data-zh="选址决定命运——一个好的基地位置可以节省数十小时。">Location is destiny — a good base spot saves dozens of hours.</p>
+    <div class="callout-danger"><div class="callout-title" data-zh="最重要的规则">The Most Important Rule</div><p data-zh="不要在起始区域（哈加盆地南部）建造永久基地！那里远离高阶资源。">Do NOT build a permanent base in the starter region (Hagga Basin South)! It's far from high-tier resources.</p></div>
+    <h3 style="color:var(--gold-bright); margin:2rem 0 1rem;" data-zh="基地建设策略">Base Building Strategy</h3>
+    <div class="timeline">
+      <div class="timeline-item"><h4 data-zh="阶段一 — 临时起始基地">Phase 1 — Temporary Starter Base</h4><p data-zh="仅满足基本需求。目标是尽快制作沙地摩托。">Just the essentials. Goal: craft a Sandbike ASAP.</p></div>
+      <div class="timeline-item"><h4 data-zh="阶段二 — 搬迁至虫壳丘间隙">Phase 2 — Relocate to Vermillius Gap</h4><p data-zh="侦查新区域，寻找两阶资源之间的位置。">Scout new areas. Find spots between two resource tiers.</p></div>
+      <div class="timeline-item"><h4 data-zh="阶段三 — 主基地">Phase 3 — Main Base</h4><p data-zh="多阶资源可达、靠近贸易站。永久生产中心。">Multi-tier resource access, near trade posts. Your permanent hub.</p></div>
+      <div class="timeline-item"><h4 data-zh="阶段四 — 前线哨站">Phase 4 — Forward Outposts</h4><p data-zh="远距资源热点，用于采集稀有材料和临时存储。">Distant resource hotspots for rare materials and temporary storage.</p></div>
+    </div>
+    <h3 style="color:var(--gold-bright); margin:2rem 0 1rem;" data-zh="资源类型">Resource Types</h3>
+    <div class="card-grid">
+      <div class="card"><h3 data-zh="基础原料">Raw Materials</h3><p data-zh="废金属、生物质、石头">Scrap Metal, Biomass, Stone — basic materials.</p></div>
+      <div class="card"><h3 data-zh="精炼材料">Refined Materials</h3><p data-zh="合金、聚合物、电路">Alloys, Polymers, Circuitry — mid-tier.</p></div>
+      <div class="card"><h3 data-zh="流体资源">Fluid Resources</h3><p data-zh="水、燃料电池">Water, Fuel Cells — survival essentials.</p></div>
+      <div class="card"><h3 data-zh="稀有材料">Rare Materials</h3><p data-zh="后期稀有资源，高级装备关键">Late-game resources for advanced gear.</p></div>
+    </div>
+    <div class="callout-tip"><div class="callout-title" data-zh="选址调查问题清单">Site Scouting Checklist</div><p data-zh="铁和什么合成钢？哪里有T3/T4/T5资源？找一个两阶资源之间的位置。">What makes Steel? Where are T3/T4/T5 resources? Find a spot between two resource tiers.</p></div>
+  </div>
+</section>
+<section id="progression">
+  <div class="container">
+    <h2 class="section-title" data-zh="中后期进阶策略">Mid &amp; Late Game Strategy</h2>
+    <p class="section-desc" data-zh="当你站稳脚跟后，游戏的深度才真正展开。">Once you've established a foothold, the game's true depth unfolds.</p>
+    <div class="card-grid">
+      <div class="card"><h3><span class="card-icon">🔧</span> <span data-zh="载具升级">Vehicle Upgrades</span></h3><ul><li><strong>Sandbike:</strong> <span data-zh="轻量单人载具">Lightweight solo transport</span></li><li><strong>Buggy:</strong> <span data-zh="中期团队载具">Mid-game group vehicle</span></li><li><strong>Ornithopter:</strong> <span data-zh="敏捷空中单位">Agile aerial unit</span></li><li data-zh="稀有零件在生态实验室获取">Rare parts found in Eco Labs</li></ul></div>
+      <div class="card"><h3><span class="card-icon">📖</span> <span data-zh="研究规划">Research Planning</span></h3><ul><li data-zh="前期优先生存工具">Prioritize survival tools early</li><li data-zh="按职业选择研究方向">Match research to your playstyle</li><li data-zh="保留情报点给后期蓝图">Save Intel Points for late-game blueprints</li></ul></div>
+      <div class="card"><h3><span class="card-icon">💎</span> <span data-zh="香料采集">Spice Harvesting</span></h3><ul><li data-zh="宇宙中最珍贵的物质">Most valuable substance in the universe</li><li data-zh="暂时增强战斗能力">Temporarily enhances combat (Prescience)</li><li data-zh="在交易所出售获得索拉里">Sell at the Exchange for Solari</li></ul></div>
+      <div class="card"><h3><span class="card-icon">🏛️</span> <span data-zh="兰兹拉德政治">Landsraad Politics</span></h3><ul><li data-zh="每周一个周期，公会竞争25个大家族">Weekly cycle — guilds compete for 25 Great Houses</li><li data-zh="任务类型：制造、探索、PVP、贸易">Tasks: Crafting, Exploration, PvP, Trading</li><li data-zh="获胜阵营选择全服政令">Winner chooses server-wide decrees</li></ul></div>
+    </div>
+  </div>
+</section>
+<section id="multiplayer">
+  <div class="container">
+    <h2 class="section-title" data-zh="多人合作与PVP">Multiplayer &amp; PvP</h2>
+    <p class="section-desc" data-zh="在厄拉科斯，你不是一个人——但其他人不一定友好。">On Arrakis, you're not alone — but others aren't necessarily friendly.</p>
+    <div class="card-grid">
+      <div class="card"><h3><span class="card-icon">🏪</span> <span data-zh="交易所">The Exchange</span></h3><ul><li data-zh="全球联动拍卖行">World-linked auction house</li><li data-zh="买卖装备、蓝图、建筑设计">Buy/sell gear, blueprints, base designs</li><li data-zh="贩卖赚取索拉里">Earn Solari from sales</li></ul></div>
+      <div class="card"><h3><span class="card-icon">⚔️</span> <span data-zh="阵营选择">Faction Choice</span></h3><ul><li><strong>Freelance:</strong> <span data-zh="自由，无阵营束缚">No faction ties</span></li><li><strong>House Atreides / Harkonnen:</strong> <span data-zh="独特任务和装备">Unique quests and gear</span></li><li data-zh="只有阵营公会能参与终局">Only aligned guilds participate in endgame</li></ul></div>
+      <div class="card"><h3><span class="card-icon">🏜️</span> <span data-zh="深漠">The Deep Desert</span></h3><ul><li data-zh="PVP终局区域——高风险高回报">Opt-in PvP endgame — high risk, high reward</li><li data-zh="每周重置，81个随机化区域">Weekly reset, 81 randomized sectors</li><li data-zh="终局蓝图、稀有材料来源">Source of endgame schematics and exotic materials</li><li data-zh="强烈建议组队">Strongly recommended to go in groups</li></ul></div>
+      <div class="card"><h3><span class="card-icon">🤝</span> <span data-zh="合作建议">Cooperation Tips</span></h3><ul><li data-zh="加入公会获得共享防御">Join a guild for shared defense</li><li data-zh="临时联盟在困难任务中也有价值">Temporary alliances are valuable</li><li data-zh="公会排名越高投票权越大">Higher guild ranking = more voting power</li></ul></div>
+    </div>
+    <div class="callout"><div class="callout-title" data-zh="个人奖励与声望">Personal Rewards &amp; Reputation</div><p data-zh="即使公会未获胜，每位贡献者仍可获得奖励。你还会与大家族建立个人声望。">Even if your guild doesn't win, every contributor earns rewards. Build personal reputation with individual Great Houses.</p></div>
+  </div>
+</section>
+<section id="faq">
+  <div class="container">
+    <h2 class="section-title" data-zh="常见问题">Frequently Asked Questions</h2>
+    <p class="section-desc" data-zh="新手最常问的问题。">The most common questions from new players.</p>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')"><span data-zh="最佳新手职业是什么？">What is the best beginner class?</span> <span class="arrow">▼</span></div><div class="faq-a"><div class="faq-a-inner" data-zh="士兵（Trooper）是最佳新手职业。专注于远程战斗，操作简单，生存能力强。">The Trooper — focuses on ranged combat, simple to play, high survivability. Early PvE enemies are mostly melee.</div></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')"><span data-zh="游戏难度大吗？">Is the game difficult?</span> <span class="arrow">▼</span></div><div class="faq-a"><div class="faq-a-inner" data-zh="不算容易。有严苛的生存机制和战术战斗，但随着角色成长会改善。">Not easy — punishing survival mechanics and tactical combat. Gets better as you progress and acquire better gear.</div></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')"><span data-zh="开局第一件事做什么？">What should I do first?</span> <span class="arrow">▼</span></div><div class="faq-a"><div class="faq-a-inner" data-zh="跟随教程任务！制作废铁刀、完成基础目标、收集情报点。">Follow the tutorial! Craft a Scrap Metal Knife, complete objectives, gather Intel Points.</div></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')"><span data-zh="最佳新手武器是什么？">What is the best beginner weapon?</span> <span class="arrow">▼</span></div><div class="faq-a"><div class="faq-a-inner" data-zh="卡波夫38步枪是哈加盆地的最佳武器。">The Karpov 38 Rifle is best for Hagga Basin (starting area).</div></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')"><span data-zh="怎么变强？">How do I get better?</span> <span class="arrow">▼</span></div><div class="faq-a"><div class="faq-a-inner" data-zh="掌握武器切换和招架机制；通过研究系统解锁蓝图；经常补充水分；加入公会。">Master weapon swaps and parries; use Research wisely; hydrate frequently; join a guild.</div></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')"><span data-zh="可以单人游玩吗？">Can I play solo?</span> <span class="arrow">▼</span></div><div class="faq-a"><div class="faq-a-inner" data-zh="可以体验大部分内容，但深漠PVP终局强烈建议组队。">Most content yes, but Deep Desert PvP strongly encourages group play.</div></div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')"><span data-zh="在哪里找到载具零件？">Where do I find vehicle parts?</span> <span class="arrow">▼</span></div><div class="faq-a"><div class="faq-a-inner" data-zh="稀有零件在生态实验室（Eco Labs）中获取。哈加盆地中心的帝国测试站2号是典型例子。">Rare parts are in Eco Labs — special instanced POIs with puzzles and crafting components.</div></div></div>
+  </div>
+</section>
+<footer>
+  <p data-zh="《沙丘：觉醒》全面攻略指南">Dune: Awakening — Complete Strategy Guide</p>
+  <p style="margin-top:0.5rem;" data-zh="基于公开攻略资料整理 · 仅供学习参考">Compiled from public resources · For educational reference only</p>
+  <p style="margin-top:1rem; color:var(--border);">Generated by Hermes Agent · 2026</p>
+</footer>
+<script>
+(function() {
+  document.querySelectorAll('[data-zh]').forEach(function(el) {
+    el.setAttribute('data-en', el.innerHTML);
+  });
+})();
+function setLang(lang) {
+  document.querySelectorAll('[data-zh]').forEach(function(el) {
+    el.innerHTML = lang === 'zh' ? el.getAttribute('data-zh') : el.getAttribute('data-en');
+  });
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  document.querySelectorAll('.lang-btn').forEach(function(btn) { btn.classList.remove('active'); });
+  if (event && event.target) event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
